@@ -1,12 +1,17 @@
+detected_OS := $(shell uname)
+
+ifeq ($(detected_OS),Darwin)        # Mac OS X
+    CC=gcc-11
+endif
 COMMON=-march=native -Wall -Werror
 
 all: find-similar-gcc_O2 find-similar-gcc_O3 find-similar-clang_O2 find-similar-clang_O3 find-similar-clang_Ofast
 
 find-similar-gcc_O2: find-similar.c search64.inc.c search256.inc.c
-	gcc $(COMMON) -O2 find-similar.c -o $@
+	$(CC) $(COMMON) -O2 find-similar.c -o $@
 
 find-similar-gcc_O3: find-similar.c search64.inc.c search256.inc.c
-	gcc $(COMMON) -O3 find-similar.c -o $@
+	$(CC) $(COMMON) -O3 find-similar.c -o $@
 
 find-similar-clang_O2: find-similar.c search64.inc.c search256.inc.c
 	clang $(COMMON) -O2 find-similar.c -o $@
