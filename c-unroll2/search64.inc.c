@@ -5,7 +5,7 @@
     int sy = Y;                                                                \
     uint64_t distance = __builtin_popcountll(to_compare ^ (data[sy]));         \
     if (unlikely(distance <= max_dist)) {                                      \
-      printf("%ld %d %d\n", distance, sx, sy);                                 \
+      printf("%" PRIu64 " %d %d\n", distance, sx, sy);                         \
     }                                                                          \
   }
 

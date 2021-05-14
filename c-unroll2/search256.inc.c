@@ -9,7 +9,7 @@
          __builtin_popcountll(to_compare2 ^ data[4 * sy + 2]) +                \
          __builtin_popcountll(to_compare3 ^ data[4 * sy + 3]));                \
     if (unlikely(distance <= max_dist)) {                                      \
-      printf("%ld %d %d\n", distance, sx, sy);                                 \
+      printf("%" PRIu64 " %d %d\n", distance, sx, sy);                         \
     }                                                                          \
   }
 

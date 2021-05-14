@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <inttypes.h>
 
 static uint64_t *data;
 static int num_data;
@@ -65,7 +66,7 @@ static void search_64() {
       uint64_t distance = __builtin_popcountll(to_compare ^ data[y]);
 
       if (distance <= max_dist) {
-        printf("%ld %d %d\n", distance, x, y);
+        printf("%" PRIu64 " %d %d\n", distance, x, y);
       }
     }
   }
@@ -85,7 +86,7 @@ static void search_256() {
                            __builtin_popcountll(to_compare3 ^ data[4 * y + 3]));
 
       if (distance <= max_dist) {
-        printf("%ld %d %d\n", distance, x, y);
+        printf("%" PRIu64 " %d %d\n", distance, x, y);
       }
     }
   }

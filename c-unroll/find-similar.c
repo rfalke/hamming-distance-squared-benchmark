@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <inttypes.h>
 
 static uint64_t *data;
 static int num_data;
@@ -78,7 +79,7 @@ static void read_data(FILE *data_input) {
     int sy = Y;                                                                \
     uint64_t distance = __builtin_popcountll(to_compare ^ (data[sy]));         \
     if (unlikely(distance <= max_dist)) {                                      \
-      printf("%ld %d %d\n", distance, sx, sy);                                 \
+      printf("%" PRIu64 " %d %d\n", distance, sx, sy);                         \
     }                                                                          \
   }
 
@@ -115,7 +116,7 @@ static void __attribute__((noinline)) search_64() {
          __builtin_popcountll(to_compare2 ^ data[4 * sy + 2]) +                \
          __builtin_popcountll(to_compare3 ^ data[4 * sy + 3]));                \
     if (unlikely(distance <= max_dist)) {                                      \
-      printf("%ld %d %d\n", distance, sx, sy);                                 \
+      printf("%" PRIu64 " %d %d\n", distance, sx, sy);                         \
     }                                                                          \
   }
 
