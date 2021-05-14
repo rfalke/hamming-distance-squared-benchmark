@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 
 
@@ -21,7 +23,7 @@ def search(entries, max_dist):
             e2 = entries[j]
             dist = bin(e1 ^ e2).count("1")
             if dist <= max_dist:
-                print "%d %d %d" % (dist, i, j)
+                print("%d %d %d" % (dist, i, j))
 
 
 def main():

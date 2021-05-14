@@ -29,7 +29,7 @@ function testone () {
 }
 
 function testpython () {
-    testone "python python-simple/find-similar.py" "$1" "$2"
+    testone "./python-simple/find-similar.py" "$1" "$2"
 }
 
 function testc () {
