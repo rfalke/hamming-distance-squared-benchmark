@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+set -e
+
+function mytime ()
+{
+    if type -p gtime > /dev/null; then
+        gtime "$@";
+    else
+        /usr/bin/time "$@";
+    fi
+}
+
 function testone () {
     timing=$(mktemp)
     cmd="$1"
@@ -11,7 +22,7 @@ function testone () {
     expectedfn="sample-data/${name}.${maxdist}.output"
 
     echo "=== cmd='$cmd' name=$name maxdist=$maxdist"
-    /usr/bin/time -f "wall=%es user=%Us" -o "$timing" $cmd "$inputfn" "$maxdist" $extra | sort -n >out
+    mytime -f "wall=%es user=%Us" -o "$timing" $cmd "$inputfn" "$maxdist" $extra | sort -n >out
     if test -f "$expectedfn"; then
         if cmp -s "$expectedfn" out; then
             t=$(cat "$timing")

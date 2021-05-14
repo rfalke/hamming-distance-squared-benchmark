@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+set -e
+
+function mytime ()
+{
+    if type -p gtime > /dev/null; then
+        gtime "$@";
+    else
+        /usr/bin/time "$@";
+    fi
+}
+
 function testone () {
     timing=$(mktemp)
     cmd="$1"
@@ -8,12 +19,11 @@ function testone () {
     extra="$4"
 
     inputfn="sample-data/${name}.input"
-    expectedfn="sample-data/${name}.${maxdist}.output"
 
     echo "=== cmd='$cmd' name=$name maxdist=$maxdist extra=$extra"
     for i in $(seq 1)
     do
-        /usr/bin/time -f "%e" -o "$timing" $cmd "$inputfn" "$maxdist" $extra >out
+        mytime -f "%e" -o "$timing" $cmd "$inputfn" "$maxdist" $extra >out
         t=$(cat "$timing")
         b=$(wc -l <out)
         echo "$maxdist $t $b" >>timing2
