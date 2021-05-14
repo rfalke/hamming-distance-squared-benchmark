@@ -11,6 +11,15 @@ function mytime ()
     fi
 }
 
+function mysort ()
+{
+    if type -p gsort > /dev/null; then
+        gsort "$@";
+    else
+        sort "$@";
+    fi
+}
+
 function testone () {
     timing=$(mktemp)
     cmd="$1"
@@ -22,7 +31,7 @@ function testone () {
     expectedfn="sample-data/${name}.${maxdist}.output"
 
     echo "=== cmd='$cmd' name=$name maxdist=$maxdist"
-    mytime -f "wall=%es user=%Us" -o "$timing" $cmd "$inputfn" "$maxdist" $extra | sort -n >out
+    mytime -f "wall=%es user=%Us" -o "$timing" $cmd "$inputfn" "$maxdist" $extra | mysort -n -b -k 1,1 -k 2,2 -k 3,3 >out
     if test -f "$expectedfn"; then
         if cmp -s "$expectedfn" out; then
             t=$(cat "$timing")
