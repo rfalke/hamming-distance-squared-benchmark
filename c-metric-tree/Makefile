@@ -21,4 +21,4 @@ format:
 	clang-format -i find-similar.c 
 
 clean:
-	rm *~ find-similar-gcc* find-similar-clang*
+	rm -f *~ find-similar-gcc* find-similar-clang*
