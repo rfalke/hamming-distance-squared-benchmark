@@ -1,26 +1,36 @@
 detected_OS := $(shell uname)
+detected_cpu := $(shell uname -m)
+
+clangextra := -march=native
 
 ifeq ($(detected_OS),Darwin)        # Mac OS X
     CC=gcc-11
+    ifeq ($(detected_cpu),arm64)
+	clangextra := -mcpu=lightning
+    endif
 endif
-COMMON=-march=native -Wall -Werror
+
+
+COMMON=-Wall -Werror
+GCCFLAGS=$(COMMON) -march=native
+CLANGFLAGS=$(COMMON) $(clangextra)
 
 all: find-similar-gcc_O2 find-similar-gcc_O3 find-similar-clang_O2 find-similar-clang_O3 find-similar-clang_Ofast
 
 find-similar-gcc_O2: find-similar.c
-	$(CC) $(COMMON) -O2 find-similar.c -o $@
+	$(CC) $(GCCFLAGS) -O2 find-similar.c -o $@
 
 find-similar-gcc_O3: find-similar.c
-	$(CC) $(COMMON) -O3 find-similar.c -o $@
+	$(CC) $(GCCFLAGS) -O3 find-similar.c -o $@
 
 find-similar-clang_O2: find-similar.c
-	clang $(COMMON) -O2 find-similar.c -o $@
+	clang $(CLANGFLAGS) -O2 find-similar.c -o $@
 	
 find-similar-clang_O3: find-similar.c
-	clang $(COMMON) -O3 find-similar.c -o $@
+	clang $(CLANGFLAGS) -O3 find-similar.c -o $@
 
 find-similar-clang_Ofast: find-similar.c
-	clang $(COMMON) -Ofast find-similar.c -o $@
+	clang $(CLANGFLAGS) -Ofast find-similar.c -o $@
 
 format:
 	clang-format -i find-similar.c 
