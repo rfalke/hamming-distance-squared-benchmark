@@ -59,6 +59,7 @@ function testc () {
     if [[ $1 == "64_"* ]]; then
         testone "c-metric-tree/find-similar-gcc_O3" "$1" "$2" 64
     fi
+    testone "c-parallel/find-similar-gcc_O3" "$1" "$2" 4
 }
 
 function testjava () {
